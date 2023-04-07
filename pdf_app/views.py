@@ -1,18 +1,34 @@
-from django.http import HttpResponse
+import subprocess
+from django.shortcuts import render
+from django.http import FileResponse
+from .forms import InsuranceClaimForm
 
-def generate_claim(request):
-    # Get the necessary data from the request
-    first_name = request.POST.get('first_name')
-    last_name = request.POST.get('last_name')
-    dob = request.POST.get('dob')
-    member_id = request.POST.get('member_id')
-    claim_num = request.POST.get('claim_num')
+class InsuranceClaimFormView:
+    def get(self, request):
+        form = InsuranceClaimForm()
+        context = {'form': form}
+        return render(request, 'index.html', context)
 
-    # Generate the PDF file
-    generate_pdf(first_name, last_name, dob, member_id, claim_num)
+    def post(self, request):
+        form = InsuranceClaimForm(request.POST)
+        if form.is_valid():
+            # Get the form data
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            dob = form.cleaned_data['dob']
+            current_date = form.cleaned_data['current_date']
+            member_id = form.cleaned_data['member_id']
+            claim_number = form.cleaned_data['claim_number']
 
-    # Return the generated PDF file as a response
-    with open("output.pdf", "rb") as pdf_file:
-        response = HttpResponse(pdf_file.read(), content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment; filename="claim.pdf"'
-        return response
+            # Run the Python script to generate the PDF file
+            command = ['python', 'generate_pdf.py', first_name, last_name, dob, current_date, member_id, claim_number]
+            subprocess.run(command)
+
+            # Return the generated PDF file as a response
+            with open('insurance_claim.pdf', 'rb') as pdf_file:
+                response = FileResponse(pdf_file)
+                return response
+    
+        context = {'form': form}
+        return render(request, 'index.html', context)
+
