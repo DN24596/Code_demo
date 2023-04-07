@@ -14,12 +14,12 @@ app.get('/', (req, res) => {
 });
 
 // Handle the form submission and generate the PDF file
-app.post('/generate_pdf', (req, res) => {
+app.post('/create_pdf', (req, res) => {
   // Get the form data
   const { first_name, last_name, dob, current_date, member_id, claim_number } = req.body;
 
   // Run the Python script to generate the PDF file
-  const pythonProcess = spawn('python', ['generate_pdf.py', first_name, last_name, dob, current_date, member_id, claim_number]);
+  const pythonProcess = spawn('python', ['create_pdf.py', first_name, last_name, dob, current_date, member_id, claim_number]);
   pythonProcess.stdout.on('data', (data) => {
     console.log(`stdout: ${data}`);
   });
