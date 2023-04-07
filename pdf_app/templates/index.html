@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Insurance Claim Form</title>
+  </head>
+  <body>
+    <h1>Insurance Claim Form</h1>
+    <form method="post" action="/generate_pdf">
+      <label for="first_name">First Name:</label>
+      <input type="text" id="first_name" name="first_name" required><br>
+      <label for="last_name">Last Name:</label>
+      <input type="text" id="last_name" name="last_name" required><br>
+      <label for="dob">Date of Birth:</label>
+      <input type="text" id="dob" name="dob" required><br>
+      <label for="current_date">Current Date:</label>
+      <input type="text" id="current_date" name="current_date" required><br>
+      <label for="member_id">Member ID:</label>
+      <input type="text" id="member_id" name="member_id" required><br>
+      <label for="claim_number">Claim Number:</label>
+      <input type="text" id="claim_number" name="claim_number" required><br>
+      <input type="submit" value="Generate PDF">
+    </form>
+  </body>
+</html>
