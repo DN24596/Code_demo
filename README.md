@@ -1,2 +1,5 @@
 # Code_demo
-This repo is designed to house code snippets of previous projects that I've worked on.
+This sole purpose of this repository is to showcase example code that i've written.
+
+
+This repository isn't set up to run files, it is strictly for demonstrating mastery and understanding.
